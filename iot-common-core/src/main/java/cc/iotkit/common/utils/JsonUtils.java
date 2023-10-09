@@ -1,5 +1,6 @@
 package cc.iotkit.common.utils;
 
+import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.PrimitiveArrayUtil;
@@ -22,7 +23,15 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class JsonUtils {
 
-    private static final ObjectMapper OBJECT_MAPPER = SpringUtils.getBean(ObjectMapper.class);
+    private static ObjectMapper OBJECT_MAPPER;
+
+    static {
+        try {
+            OBJECT_MAPPER = SpringUtils.getBean(ObjectMapper.class);
+        } catch (UtilException e) {
+            OBJECT_MAPPER = new ObjectMapper();
+        }
+    }
 
     public static ObjectMapper getObjectMapper() {
         return OBJECT_MAPPER;
