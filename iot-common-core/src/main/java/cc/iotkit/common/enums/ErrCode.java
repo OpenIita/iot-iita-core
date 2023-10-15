@@ -110,8 +110,16 @@ public enum ErrCode implements IEnum {
     RECORD_NOT_FOUND(50000032, "记录不存在"),
     ADD_PLATFORM_USER_ERROR(50000033, "添加平台用户失败"),
     UPLOAD_FILE_ERROR(50000034, "上传文件失败"),
-    FILE_NAME_IS_NULL(50000035, "文件名为空，获取文件名失败");
+    FILE_NAME_IS_NULL(50000035, "文件名为空，获取文件名失败"),
+    PRODUCT_KEY_EXIST(50000036, "ProductKey已存在"),
+    DATA_ALREADY(50000037, "记录已存在"),
 
+    TENANT_NOT_FOUND(50001001, "租户不存在"),
+    TENANT_DISABLE(50001002, "租户已禁用"),
+    TENANT_EXPIRE(50001003, "租户已过期"),
+    UNAUTHORIZED_TENANT(50001004, "不允许操作管理租户"),
+    PACKAGE_NOT_FOUND(50001005, "套餐不存在"),
+    ;
 
     private int code;
     private String message;

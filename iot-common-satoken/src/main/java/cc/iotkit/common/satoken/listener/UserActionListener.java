@@ -2,10 +2,10 @@ package cc.iotkit.common.satoken.listener;
 
 import cc.iotkit.common.constant.CacheConstants;
 import cc.iotkit.common.enums.UserType;
+import cc.iotkit.common.model.LoginUser;
+import cc.iotkit.common.model.UserOnlineDTO;
 import cc.iotkit.common.redis.utils.RedisUtils;
 import cc.iotkit.common.satoken.utils.LoginHelper;
-import cc.iotkit.common.undefined.LoginUser;
-import cc.iotkit.common.undefined.UserOnlineDTO;
 import cc.iotkit.common.utils.ip.AddressUtils;
 import cc.iotkit.common.web.utils.ServletUtils;
 import cn.dev33.satoken.config.SaTokenConfig;

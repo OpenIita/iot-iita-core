@@ -1,6 +1,5 @@
-package cc.iotkit.common.service;
+package cc.iotkit.common.thing;
 
-import cc.iotkit.common.thing.ThingService;
 
 /**
  * 通用设备服务

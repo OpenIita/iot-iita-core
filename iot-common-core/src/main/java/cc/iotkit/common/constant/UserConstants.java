@@ -58,6 +58,11 @@ public interface UserConstants {
     String DICT_NORMAL = "0";
 
     /**
+     * 字典停用状态
+     */
+    String DICT_ABNORMAL = "1";
+
+    /**
      * 是否为系统默认（是）
      */
     String YES = "Y";

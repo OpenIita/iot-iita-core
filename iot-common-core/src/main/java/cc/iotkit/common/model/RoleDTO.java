@@ -1,4 +1,4 @@
-package cc.iotkit.common.undefined;
+package cc.iotkit.common.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

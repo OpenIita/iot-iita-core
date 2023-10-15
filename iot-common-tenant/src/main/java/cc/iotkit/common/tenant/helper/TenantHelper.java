@@ -3,9 +3,11 @@ package cc.iotkit.common.tenant.helper;
 import cc.iotkit.common.constant.GlobalConstants;
 import cc.iotkit.common.redis.utils.RedisUtils;
 import cc.iotkit.common.satoken.utils.LoginHelper;
+import cc.iotkit.common.utils.SpringUtils;
 import cc.iotkit.common.utils.StringUtils;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.spring.SpringMVCUtil;
+import cn.hutool.core.convert.Convert;
 import com.alibaba.ttl.TransmittableThreadLocal;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,14 @@ public class TenantHelper {
     private static final String DYNAMIC_TENANT_KEY = GlobalConstants.GLOBAL_REDIS_KEY + "dynamicTenant";
 
     private static final ThreadLocal<String> TEMP_DYNAMIC_TENANT = new TransmittableThreadLocal<>();
+
+    /**
+     * 租户功能是否启用
+     */
+    public static boolean isEnable() {
+        return Convert.toBool(SpringUtils.getProperty("tenant.enable"), false);
+    }
+
 
     /**
      * 设置动态租户(一直有效 需要手动清理)

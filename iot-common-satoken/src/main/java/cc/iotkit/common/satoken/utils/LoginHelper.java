@@ -4,10 +4,10 @@ import cc.iotkit.common.constant.TenantConstants;
 import cc.iotkit.common.constant.UserConstants;
 import cc.iotkit.common.enums.DeviceType;
 import cc.iotkit.common.enums.UserType;
-import cc.iotkit.common.undefined.LoginUser;
+import cc.iotkit.common.model.LoginUser;
 import cn.dev33.satoken.context.SaHolder;
 import cn.dev33.satoken.context.model.SaStorage;
-import cn.dev33.satoken.exception.InvalidContextException;
+import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.StpUtil;
 import cn.hutool.core.util.ObjectUtil;
@@ -15,7 +15,6 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -72,11 +71,17 @@ public class LoginHelper {
      * 获取用户(多级缓存)
      */
     public static LoginUser getLoginUser() {
-        LoginUser loginUser = (LoginUser) SaHolder.getStorage().get(LOGIN_USER_KEY);
-        if (loginUser != null) {
+        LoginUser loginUser = null;
+        Object saCache=SaHolder.getStorage().get(LOGIN_USER_KEY);
+        if (saCache != null) {
+            loginUser=(LoginUser) saCache;
             return loginUser;
         }
-        loginUser = (LoginUser) StpUtil.getTokenSession().get(LOGIN_USER_KEY);
+        SaSession cache=StpUtil.getTokenSession();
+        if (cache != null) {
+            loginUser= (LoginUser) cache.get(LOGIN_USER_KEY);
+            return loginUser;
+        }
         SaHolder.getStorage().set(LOGIN_USER_KEY, loginUser);
         return loginUser;
     }

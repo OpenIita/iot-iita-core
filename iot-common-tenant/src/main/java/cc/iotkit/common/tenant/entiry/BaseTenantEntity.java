@@ -2,8 +2,8 @@ package cc.iotkit.common.tenant.entiry;
 
 import cc.iotkit.common.tenant.dao.TenantAware;
 import cc.iotkit.common.tenant.listener.TenantListener;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.ParamDef;
@@ -29,6 +29,7 @@ import java.util.Date;
 
 @MappedSuperclass
 @Data
+@NoArgsConstructor
 @FilterDef(name = "tenantFilter", parameters = {@ParamDef(name = "tenantId", type = "string")})
 @Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
 @EntityListeners(TenantListener.class)
@@ -38,7 +39,6 @@ public abstract class BaseTenantEntity implements TenantAware, Serializable {
     @Id
     private Long id;
 
-    @Size(max = 30)
     @Column(name = "tenant_id")
     private String tenantId;
 
