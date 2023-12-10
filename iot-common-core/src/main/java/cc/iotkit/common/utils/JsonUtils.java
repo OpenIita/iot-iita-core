@@ -1,6 +1,5 @@
 package cc.iotkit.common.utils;
 
-import cn.hutool.core.exceptions.UtilException;
 import cn.hutool.core.lang.Dict;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.core.util.PrimitiveArrayUtil;
@@ -28,7 +27,7 @@ public class JsonUtils {
     static {
         try {
             OBJECT_MAPPER = SpringUtils.getBean(ObjectMapper.class);
-        } catch (UtilException e) {
+        } catch (Exception e) {
             OBJECT_MAPPER = new ObjectMapper();
         }
     }

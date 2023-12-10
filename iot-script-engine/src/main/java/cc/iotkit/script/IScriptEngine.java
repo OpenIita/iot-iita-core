@@ -12,4 +12,6 @@ public interface IScriptEngine {
 
     <T> T invokeMethod(TypeReference<T> type, String methodName, Object... args);
 
+    String invokeMethod(String methodName, String args);
+
 }

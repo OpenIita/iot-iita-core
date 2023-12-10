@@ -36,11 +36,22 @@ public class ScriptEngineFactory {
                     public <T> T invokeMethod(TypeReference<T> type, String methodName, Object... args) {
                         return null;
                     }
+
+                    @Override
+                    public String invokeMethod(String methodName, String args) {
+                        return null;
+                    }
                 };
             case "js":
             default:
                 return new JavaScriptEngine();
         }
+    }
+
+    public static IScriptEngine getJsEngine(String script) {
+        JavaScriptEngine scriptEngine = new JavaScriptEngine();
+        scriptEngine.setScript(script);
+        return scriptEngine;
     }
 
 }

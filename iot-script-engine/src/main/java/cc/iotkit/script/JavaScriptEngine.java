@@ -54,12 +54,9 @@ public class JavaScriptEngine implements IScriptEngine {
     @Override
     public <T> T invokeMethod(TypeReference<T> type, String methodName, Object... args) {
         Value member = jsScript.getMember("invoke");
-
         StringBuilder sbArgs = formatArgs(args);
-
         //通过调用invoke方法将目标方法返回结果转成json
         Value rst = member.execute(methodName, args);
-
         String json = rst.asString();
         log.info("invoke script={}, args={}, result={}", methodName, sbArgs, json);
 
@@ -67,8 +64,21 @@ public class JavaScriptEngine implements IScriptEngine {
         if (json == null || "null".equals(json)) {
             return null;
         }
-
         return JsonUtils.parseObject(json, type);
+    }
+
+    @Override
+    public String invokeMethod(String methodName, String args) {
+        Value member = jsScript.getMember("invoke");
+        //通过调用invoke方法将目标方法返回结果转成json
+        Value rst = member.execute(methodName, JsonUtils.parseArray(args, Object.class));
+        String json = rst.asString();
+        log.info("invoke script={}, args={}, result={}", methodName, args, json);
+        //没有返回值
+        if (json == null || "null".equals(json)) {
+            return null;
+        }
+        return json;
     }
 
     private static StringBuilder formatArgs(Object[] args) {
