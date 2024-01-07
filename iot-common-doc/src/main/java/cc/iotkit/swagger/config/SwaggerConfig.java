@@ -82,49 +82,4 @@ public class SwaggerConfig {
             }
         };
     }
-
-//    /**
-//     * 解决springboot升级到2.6.x之后，knife4j报错
-//     *
-//     * @param webEndpointsSupplier        the web endpoints supplier
-//     * @param servletEndpointsSupplier    the servlet endpoints supplier
-//     * @param controllerEndpointsSupplier the controller endpoints supplier
-//     * @param endpointMediaTypes          the endpoint media types
-//     * @param corsProperties              the cors properties
-//     * @param webEndpointProperties       the web endpoint properties
-//     * @param environment                 the environment
-//     * @return the web mvc endpoint handler mapping
-//     */
-//    @Bean
-//    public WebMvcEndpointHandlerMapping webEndpointServletHandlerMapping(
-//            WebEndpointsSupplier webEndpointsSupplier, ServletEndpointsSupplier servletEndpointsSupplier,
-//            ControllerEndpointsSupplier controllerEndpointsSupplier, EndpointMediaTypes endpointMediaTypes,
-//            CorsEndpointProperties corsProperties, WebEndpointProperties webEndpointProperties,
-//            Environment environment) {
-//        List<ExposableEndpoint<?>> allEndpoints = new ArrayList<>();
-//        Collection<ExposableWebEndpoint> webEndpoints = webEndpointsSupplier.getEndpoints();
-//        allEndpoints.addAll(webEndpoints);
-//        allEndpoints.addAll(servletEndpointsSupplier.getEndpoints());
-//        allEndpoints.addAll(controllerEndpointsSupplier.getEndpoints());
-//        String basePath = webEndpointProperties.getBasePath();
-//        EndpointMapping endpointMapping = new EndpointMapping(basePath);
-//        boolean shouldRegisterLinksMapping = shouldRegisterLinksMapping(webEndpointProperties,
-//                environment, basePath);
-//        return new WebMvcEndpointHandlerMapping(endpointMapping, webEndpoints, endpointMediaTypes,
-//                corsProperties.toCorsConfiguration(), new EndpointLinksResolver(allEndpoints, basePath),
-//                shouldRegisterLinksMapping, null);
-//    }
-//
-//    /**
-//     * shouldRegisterLinksMapping
-//     * @param webEndpointProperties webEndpointProperties
-//     * @param environment environment
-//     * @param basePath /
-//     * @return boolean
-//     */
-//    private boolean shouldRegisterLinksMapping(WebEndpointProperties webEndpointProperties,
-//                                               Environment environment, String basePath) {
-//        return webEndpointProperties.getDiscovery().isEnabled() && (StringUtils.hasText(basePath)
-//                || ManagementPortType.get(environment).equals(ManagementPortType.DIFFERENT));
-//    }
 }
