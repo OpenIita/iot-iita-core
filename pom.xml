@@ -6,7 +6,7 @@
 
     <groupId>cc.iotkit</groupId>
     <artifactId>iot-iita-core</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -23,6 +23,8 @@
         <module>iot-common-web</module>
         <module>iot-common-websocket</module>
         <module>iot-common-thing</module>
+        <module>iot-plugin-core</module>
+        <module>iot-spring-brick</module>
     </modules>
 
     <properties>
@@ -227,6 +229,12 @@
                         <artifactId>poi-ooxml-schemas</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.xmlbeans</groupId>
+                <artifactId>xmlbeans</artifactId>
+                <version>5.2.0</version>
             </dependency>
 
             <dependency>
