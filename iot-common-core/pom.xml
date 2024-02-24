@@ -6,7 +6,7 @@
     <parent>
         <artifactId>iot-iita-core</artifactId>
         <groupId>cc.iotkit</groupId>
-        <version>1.0.2</version>
+        <version>1.0.3</version>
     </parent>
 
     <artifactId>iot-common-core</artifactId>

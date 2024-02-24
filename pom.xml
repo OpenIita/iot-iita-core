@@ -6,7 +6,7 @@
 
     <groupId>cc.iotkit</groupId>
     <artifactId>iot-iita-core</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -25,6 +25,7 @@
         <module>iot-common-thing</module>
         <module>iot-plugin-core</module>
         <module>iot-spring-brick</module>
+        <module>iot-oss-local</module>
     </modules>
 
     <properties>
@@ -44,6 +45,12 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -318,6 +325,12 @@
             <dependency>
                 <groupId>cc.iotkit</groupId>
                 <artifactId>iot-common-satoken</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cc.iotkit</groupId>
+                <artifactId>iot-common-oss</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

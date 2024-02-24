@@ -14,6 +14,8 @@ public enum ActionType {
 
     //注册
     REGISTER("register"),
+    //子注册
+    SUB_REGISTER("sub_register"),
     //设备拓扑更新
     TOPOLOGY("topology"),
     //在离线状态变更

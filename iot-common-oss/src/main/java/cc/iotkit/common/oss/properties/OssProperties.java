@@ -1,6 +1,9 @@
 package cc.iotkit.common.oss.properties;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * OSS对象存储 配置属性
@@ -8,6 +11,9 @@ import lombok.Data;
  * @author Lion Li
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class OssProperties {
 
     /**

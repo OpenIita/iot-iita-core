@@ -9,14 +9,12 @@
         <version>1.0.3</version>
     </parent>
 
-    <artifactId>iot-plugin-core</artifactId>
+    <artifactId>iot-oss-local</artifactId>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-        <spring-brick.version>3.1.4</spring-brick.version>
     </properties>
 
     <dependencies>
@@ -28,26 +26,28 @@
 
         <dependency>
             <groupId>cc.iotkit</groupId>
-            <artifactId>iot-script-engine</artifactId>
-            <version>${project.version}</version>
+            <artifactId>iot-common-redis</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cc.iotkit</groupId>
-            <artifactId>iot-message-core</artifactId>
-        </dependency>
-
-        <!--====================第三方库===================-->
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <artifactId>iot-common-oss</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.gitee.starblues</groupId>
-            <artifactId>spring-brick</artifactId>
-            <version>${spring-brick.version}</version>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-web</artifactId>
+            <version>${vertx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
     </dependencies>
