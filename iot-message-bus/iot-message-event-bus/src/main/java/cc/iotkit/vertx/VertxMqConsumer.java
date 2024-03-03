@@ -12,6 +12,7 @@ package cc.iotkit.vertx;
 import cc.iotkit.mq.ConsumerHandler;
 import cc.iotkit.mq.MqConsumer;
 import io.vertx.core.AbstractVerticle;
+import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.eventbus.EventBus;
 import io.vertx.core.eventbus.Message;
@@ -25,12 +26,14 @@ public class VertxMqConsumer<T> implements MqConsumer<T> {
 
     private final MqConsumerVerticle<T> consumerVerticle;
 
-    private final CountDownLatch countDownLatch = new CountDownLatch(1);
+    private final CountDownLatch countDownLatch = new CountDownLatch(4);
 
     @SneakyThrows
     public VertxMqConsumer(Class<T> cls) {
         consumerVerticle = new MqConsumerVerticle<>(cls);
-        VertxManager.getVertx().deployVerticle(consumerVerticle, stringAsyncResult -> countDownLatch.countDown());
+        for (int i = 0; i < 4; i++) {
+            VertxManager.getVertx().deployVerticle(consumerVerticle,new DeploymentOptions().setWorker(true), stringAsyncResult -> countDownLatch.countDown());
+        }
         //等待初始化穿完成
         countDownLatch.await();
     }
