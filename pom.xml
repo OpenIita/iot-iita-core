@@ -230,18 +230,18 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>3.2.1</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.apache.poi</groupId>
-                        <artifactId>poi-ooxml-schemas</artifactId>
-                    </exclusion>
-                </exclusions>
+<!--                <exclusions>-->
+<!--                    <exclusion>-->
+<!--                        <groupId>org.apache.poi</groupId>-->
+<!--                        <artifactId>poi-ooxml-schemas</artifactId>-->
+<!--                    </exclusion>-->
+<!--                </exclusions>-->
             </dependency>
 
             <dependency>
                 <groupId>org.apache.xmlbeans</groupId>
                 <artifactId>xmlbeans</artifactId>
-                <version>5.2.0</version>
+                <version>3.1.0</version>
             </dependency>
 
             <dependency>
