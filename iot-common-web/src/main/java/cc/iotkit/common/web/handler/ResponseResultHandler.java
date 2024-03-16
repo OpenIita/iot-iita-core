@@ -14,6 +14,7 @@ import cn.dev33.satoken.util.SaResult;
 import cn.hutool.core.util.IdUtil;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -27,6 +28,9 @@ import java.util.Map;
 public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        if (returnType.getParameterType() == ResponseEntity.class) {
+            return false;
+        }
         return !converterType.equals(StringHttpMessageConverter.class);
     }
 

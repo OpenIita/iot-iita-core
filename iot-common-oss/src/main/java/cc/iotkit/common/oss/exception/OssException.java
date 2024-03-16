@@ -15,4 +15,7 @@ public class OssException extends RuntimeException {
         super(msg);
     }
 
+    public OssException(String msg, Exception e) {
+        super(msg, e);
+    }
 }

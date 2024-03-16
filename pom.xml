@@ -6,7 +6,7 @@
 
     <groupId>cc.iotkit</groupId>
     <artifactId>iot-iita-core</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -25,7 +25,7 @@
         <module>iot-common-thing</module>
         <module>iot-plugin-core</module>
         <module>iot-spring-brick</module>
-        <module>iot-oss-local</module>
+        <module>iot-oss-embed</module>
     </modules>
 
     <properties>
@@ -41,6 +41,7 @@
         <lock4j.version>2.2.4</lock4j.version>
         <mapstruct-plus.version>1.3.1</mapstruct-plus.version>
         <lombok.version>1.18.26</lombok.version>
+        <aws-v2.version>2.24.9</aws-v2.version>
     </properties>
 
     <dependencyManagement>
@@ -284,6 +285,48 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>1.57</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.dataformat</groupId>
+                <artifactId>jackson-dataformat-xml</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jsr310</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.datatype</groupId>
+                <artifactId>jackson-datatype-jdk8</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>regions</artifactId>
+                <version>${aws-v2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>utils</artifactId>
+                <version>${aws-v2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${aws-v2.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.xml.bind</groupId>
+                <artifactId>jakarta.xml.bind-api</artifactId>
+                <version>4.0.1</version>
             </dependency>
 
             <dependency>

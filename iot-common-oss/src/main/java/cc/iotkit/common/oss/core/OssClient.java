@@ -89,7 +89,10 @@ public class OssClient {
             client.createBucket(createBucketRequest);
             client.setBucketPolicy(bucketName, getPolicy(bucketName, accessPolicy.getPolicyType()));
         } catch (Exception e) {
-            throw new OssException("创建Bucket失败, 请核对配置信息:[" + e.getMessage() + "]");
+            if (e.getMessage().contains("Your previous request to create the named bucket succeeded and you already own it")) {
+                return;
+            }
+            throw new OssException("创建Bucket失败, 请核对配置信息:[" + e.getMessage() + "]", e);
         }
     }
 
@@ -110,7 +113,7 @@ public class OssClient {
             putObjectRequest.setCannedAcl(getAccessPolicy().getAcl());
             client.putObject(putObjectRequest);
         } catch (Exception e) {
-            throw new OssException("上传文件失败，请检查配置信息:[" + e.getMessage() + "]");
+            throw new OssException("上传文件失败，请检查配置信息:[" + e.getMessage() + "]", e);
         }
         return UploadResult.builder().url(getUrl() + "/" + path).filename(path).build();
     }
@@ -175,7 +178,11 @@ public class OssClient {
         if (StringUtils.isNotBlank(prefix)) {
             path = prefix + "/" + path;
         }
-        return path + suffix;
+        path = path + suffix;
+        if (configKey.equals("oss-embed")) {
+            return path.replace("/", "_");
+        }
+        return path;
     }
 
 
