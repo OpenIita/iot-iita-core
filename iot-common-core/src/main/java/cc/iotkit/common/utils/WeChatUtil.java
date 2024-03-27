@@ -68,7 +68,7 @@ public class WeChatUtil {
         return "";
     }
 
-    public static String getOp(String appId, String secret, String code) {
+    public static String getOpenId(String appId, String secret, String code) {
         String url=authUrl+"?appid="+appId+"&secret="+secret+"&js_code="+code+"&grant_type=authorization_code";
         String ret=WeChatUtil.httpRequest(url,"GET",null);
         String openid = JsonUtils.parseMap(ret).getStr("openid");
