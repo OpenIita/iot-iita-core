@@ -33,6 +33,8 @@ import java.util.Arrays;
 @Slf4j
 public class WeChatUtil {
 
+    private static String authUrl="https://api.weixin.qq.com/sns/jscode2session";
+
     public static String httpRequest(String requestUrl, String requestMethod, String output) {
         try {
             URL url = new URL(requestUrl);
@@ -64,6 +66,13 @@ public class WeChatUtil {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static String getOp(String appId, String secret, String code) {
+        String url=authUrl+"?appid="+appId+"&secret="+secret+"&js_code="+code+"&grant_type=authorization_code";
+        String ret=WeChatUtil.httpRequest(url,"GET",null);
+        String openid = JsonUtils.parseMap(ret).getStr("openid");
+        return openid;
     }
 
     public static String decryptData(String encryptDataB64, String sessionKeyB64, String ivB64) {
