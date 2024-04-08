@@ -25,7 +25,9 @@ public class SaPermissionImpl implements StpInterface {
         if (userType == UserType.SYS_USER) {
             return new ArrayList<>(loginUser.getMenuPermission());
         } else if (userType == UserType.APP_USER) {
-            // 其他端 自行根据业务编写
+            List<String> perms = new ArrayList<>();
+            perms.add("*:*:*");
+            return perms;
         }
         return new ArrayList<>();
     }
