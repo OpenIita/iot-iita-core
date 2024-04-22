@@ -41,6 +41,9 @@ public class ThingModelMessage {
     public static final String ID_CONFIG_GET = "get";
     public static final String ID_CONFIG_SET = "set";
     public static final String ID_DEREGISTER = "deregister";
+    public static final String ID_ONLINE = "online";
+    public static final String ID_OFFLINE = "offline";
+    public static final String SERVICE_REPLY_SUFFIX = "_reply";
 
     private String id;
 
