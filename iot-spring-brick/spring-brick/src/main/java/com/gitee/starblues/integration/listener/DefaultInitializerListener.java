@@ -23,6 +23,7 @@
 
 package com.gitee.starblues.integration.listener;
 
+import com.gitee.starblues.utils.SpringBeanUtils;
 import org.springframework.context.ApplicationContext;
 
 /**
@@ -33,8 +34,10 @@ import org.springframework.context.ApplicationContext;
  */
 public class DefaultInitializerListener implements PluginInitializerListener{
 
+    private final SwaggerListener swaggerListener;
 
     public DefaultInitializerListener(ApplicationContext applicationContext) {
+        this.swaggerListener = SpringBeanUtils.getExistBean(applicationContext, SwaggerListener.class);
     }
 
 
@@ -54,6 +57,9 @@ public class DefaultInitializerListener implements PluginInitializerListener{
     }
 
     private void refresh(){
+        if(swaggerListener != null){
+            swaggerListener.refresh();
+        }
     }
 
 }

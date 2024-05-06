@@ -23,16 +23,20 @@
 
 package com.gitee.starblues.integration;
 
+import com.gitee.starblues.integration.listener.SwaggerListener;
 import com.gitee.starblues.spring.ResolvePluginThreadClassLoader;
 import com.gitee.starblues.spring.web.PluginStaticResourceConfig;
 import com.gitee.starblues.spring.web.PluginStaticResourceWebMvcConfigurer;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.GenericApplicationContext;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.ResourceResolver;
+import springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper;
 
 /**
  * 系统web环境配置点
@@ -42,6 +46,7 @@ import org.springframework.web.servlet.resource.ResourceResolver;
 @ConditionalOnWebApplication
 @Import({
         ExtendPointWebConfiguration.PluginStaticResourceConfiguration.class,
+        ExtendPointWebConfiguration.SwaggerListenerConfiguration.class,
 })
 public class ExtendPointWebConfiguration {
 
@@ -60,6 +65,24 @@ public class ExtendPointWebConfiguration {
         public PluginStaticResourceConfig pluginStaticResourceConfig() {
             return new PluginStaticResourceConfig();
         }
+    }
+
+    @ConditionalOnClass({ DocumentationPluginsBootstrapper.class })
+    @ConditionalOnProperty(name = "plugin.pluginSwaggerScan", havingValue = "true", matchIfMissing = true)
+    public static class SwaggerListenerConfiguration {
+
+        private final GenericApplicationContext applicationContext;
+
+        public SwaggerListenerConfiguration(GenericApplicationContext applicationContext) {
+            this.applicationContext = applicationContext;
+        }
+
+        @Bean
+        @ConditionalOnMissingBean
+        public SwaggerListener swaggerListener(){
+            return new SwaggerListener(applicationContext);
+        }
+
     }
 
     @Bean

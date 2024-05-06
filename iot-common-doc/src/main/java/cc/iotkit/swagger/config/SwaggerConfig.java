@@ -71,6 +71,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(applicationName)
+                .termsOfServiceUrl("http://ip:port/**")
                 .description("Swagger API Doc")
                 .build();
     }
