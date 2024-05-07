@@ -52,6 +52,11 @@ public class ResponseResultHandler implements ResponseBodyAdvice<Object> {
                                   MediaType selectedContentType,
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
+        String requestPath = request.getURI().getPath();
+        if(requestPath.startsWith("/plugins/")){
+            return body;
+        }
+
         if (body instanceof GlobalExceptionHandler.RequestResult) {
             GlobalExceptionHandler.RequestResult requestResult = (GlobalExceptionHandler.RequestResult) body;
             return new Response(requestResult.getCode(), requestResult.getMessage(),
