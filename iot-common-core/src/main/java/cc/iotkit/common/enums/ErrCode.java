@@ -136,6 +136,9 @@ public enum ErrCode implements IEnum {
     FILE_NAME_IS_NULL(50000035, "文件名为空，获取文件名失败"),
     PRODUCT_KEY_EXIST(50000036, "ProductKey已存在"),
     DATA_ALREADY(50000037, "记录已存在"),
+    TEMPLATE_NAME_ALREADY(50000038, "模版名称已存在"),
+    RELATED_PRODUCTS_EXIST(50000039, "存在关联产品"),
+
 
     TENANT_NOT_FOUND(50001001, "租户不存在"),
     TENANT_DISABLE(50001002, "租户已禁用"),
