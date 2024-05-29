@@ -171,6 +171,11 @@ public interface Constants {
     String PROPERTY_CACHE_KEY = "str:iotkit:device:property:%s";
 
     /**
+     * 设备最后一次通讯缓存key
+     */
+    String LAST_TIME_CACHE_KEY = "str:iotkit:device:lasttime:%s";
+
+    /**
      * 三方平台类型
      */
     enum ThirdPlatform {
