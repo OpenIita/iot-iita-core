@@ -37,7 +37,7 @@ import lombok.experimental.SuperBuilder;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-@NoArgsConstructor
+
 @AllArgsConstructor
 @SuperBuilder
 @ToString(callSuper = true)
