@@ -24,9 +24,10 @@
 package cc.iotkit.common.api;
 
 import cn.hutool.core.util.IdUtil;
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.Data;
+
 
 import java.io.Serializable;
 

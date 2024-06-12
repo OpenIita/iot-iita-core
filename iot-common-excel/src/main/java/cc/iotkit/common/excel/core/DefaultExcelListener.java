@@ -31,8 +31,8 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.exception.ExcelAnalysisException;
 import com.alibaba.excel.exception.ExcelDataConvertException;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.ConstraintViolationException;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
