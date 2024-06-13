@@ -63,6 +63,6 @@ public interface TenantConstants {
     /**
      * 默认租户ID
      */
-    String DEFAULT_TENANT_ID = "000000";
+    Long DEFAULT_TENANT_ID = 0L;
 
 }

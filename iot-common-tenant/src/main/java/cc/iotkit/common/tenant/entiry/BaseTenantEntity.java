@@ -63,7 +63,7 @@ public abstract class BaseTenantEntity implements TenantAware, Serializable {
     private Long id;
 
     @Column(name = "tenant_id")
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 创建部门
@@ -98,7 +98,7 @@ public abstract class BaseTenantEntity implements TenantAware, Serializable {
     @Column(name = "update_time")
     private Date updateTime;
 
-    public BaseTenantEntity(String tenantId) {
+    public BaseTenantEntity(Long tenantId) {
         this.tenantId = tenantId;
     }
 

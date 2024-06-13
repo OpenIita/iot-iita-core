@@ -46,7 +46,7 @@ public class LoginUser implements Serializable {
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 用户ID

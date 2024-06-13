@@ -36,6 +36,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Objects;
+
 /**
  * 租户助手
  *
@@ -47,7 +49,7 @@ public class TenantHelper {
 
     private static final String DYNAMIC_TENANT_KEY = GlobalConstants.GLOBAL_REDIS_KEY + "dynamicTenant";
 
-    private static final ThreadLocal<String> TEMP_DYNAMIC_TENANT = new TransmittableThreadLocal<>();
+    private static final ThreadLocal<Long> TEMP_DYNAMIC_TENANT = new TransmittableThreadLocal<>();
 
     /**
      * 租户功能是否启用
@@ -62,7 +64,7 @@ public class TenantHelper {
      * <p>
      * 如果为非web环境 那么只在当前线程内生效
      */
-    public static void setDynamic(String tenantId) {
+    public static void setDynamic(Long tenantId) {
         if (!SpringMVCUtil.isWeb()) {
             TEMP_DYNAMIC_TENANT.set(tenantId);
             return;
@@ -77,13 +79,13 @@ public class TenantHelper {
      * <p>
      * 如果为非web环境 那么只在当前线程内生效
      */
-    public static String getDynamic() {
+    public static Long getDynamic() {
         if (!SpringMVCUtil.isWeb()) {
             return TEMP_DYNAMIC_TENANT.get();
         }
         String cacheKey = DYNAMIC_TENANT_KEY + ":" + LoginHelper.getUserId();
-        String tenantId = (String) SaHolder.getStorage().get(cacheKey);
-        if (StringUtils.isNotBlank(tenantId)) {
+        Long tenantId = (Long) SaHolder.getStorage().get(cacheKey);
+        if (Objects.isNull(tenantId)) {
             return tenantId;
         }
         tenantId = RedisUtils.getCacheObject(cacheKey);
@@ -107,9 +109,9 @@ public class TenantHelper {
     /**
      * 获取当前租户id(动态租户优先)
      */
-    public static String getTenantId() {
-        String tenantId = TenantHelper.getDynamic();
-        if (StringUtils.isBlank(tenantId)) {
+    public static Long getTenantId() {
+        Long tenantId = Long.valueOf(TenantHelper.getDynamic());
+        if (Objects.isNull(tenantId)) {
             tenantId = LoginHelper.getTenantId();
         }
         return tenantId;

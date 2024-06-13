@@ -134,7 +134,7 @@ public class LoginHelper {
     /**
      * 获取租户ID
      */
-    public static String getTenantId() {
+    public static Long getTenantId() {
         try {
             LoginUser loginUser = getLoginUser();
             if (loginUser == null) {
@@ -142,7 +142,7 @@ public class LoginHelper {
                 if (tenantId == null) {
                     return null;
                 }
-                return tenantId.toString();
+                return (Long) tenantId;
             }
             return loginUser.getTenantId();
         } catch (Exception e) {
@@ -156,7 +156,7 @@ public class LoginHelper {
      *
      * @param tenantId 租户ID
      */
-    public static void setTenantId(String tenantId) {
+    public static void setTenantId(Long tenantId) {
         SaHolder.getStorage().set(TENANT_KEY, tenantId);
     }
 

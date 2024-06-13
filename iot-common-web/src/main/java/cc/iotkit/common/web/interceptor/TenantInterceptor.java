@@ -45,7 +45,7 @@ public class TenantInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (request.getHeader(TENANT_ID) != null) {
-            String tenantId = request.getHeader(TENANT_ID);
+            Long tenantId = Long.valueOf(request.getHeader(TENANT_ID));
             SaHolder.getStorage().set("tenantId", tenantId);
         }
         return true;

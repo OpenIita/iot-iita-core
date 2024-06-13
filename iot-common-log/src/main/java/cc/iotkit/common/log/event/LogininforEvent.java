@@ -42,7 +42,7 @@ public class LogininforEvent implements Serializable {
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 用户账号

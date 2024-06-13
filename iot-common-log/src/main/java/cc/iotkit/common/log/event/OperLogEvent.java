@@ -46,7 +46,7 @@ public class OperLogEvent implements Serializable {
     /**
      * 租户ID
      */
-    private String tenantId;
+    private Long tenantId;
 
     /**
      * 操作模块

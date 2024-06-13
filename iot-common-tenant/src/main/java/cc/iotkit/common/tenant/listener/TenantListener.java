@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
 import javax.persistence.PreUpdate;
+import java.util.Objects;
 
 /**
  * 类描述...
@@ -48,12 +49,12 @@ public class TenantListener {
     @PreRemove
     @PrePersist
     public void setTenant(TenantAware entity) {
-        String tenantId = LoginHelper.getTenantId();
-        String dynamic = TenantHelper.getDynamic();
-        if (StringUtils.isNotBlank(dynamic)) {
+        Long tenantId = LoginHelper.getTenantId();
+        Long dynamic = TenantHelper.getDynamic();
+        if (!Objects.isNull(dynamic)) {
             tenantId = dynamic;
         }
-        if (!"000000".equals(tenantId) && tenantId != null) {
+        if ( tenantId != null) {
             entity.setTenantId(tenantId);
         }
     }
