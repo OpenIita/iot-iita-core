@@ -53,7 +53,6 @@ public class PageRequest<T> extends Request<T> implements Serializable {
      * 分页大小
      */
     @Min(1)
-    @NotNull
     private Integer pageSize;
 
     /**
@@ -61,7 +60,6 @@ public class PageRequest<T> extends Request<T> implements Serializable {
      */
     @Min(1)
     @Max(100)
-    @NotNull
     private Integer pageNum;
 
     /**
