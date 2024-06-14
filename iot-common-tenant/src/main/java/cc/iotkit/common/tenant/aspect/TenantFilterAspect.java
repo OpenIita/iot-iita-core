@@ -49,6 +49,9 @@ public class TenantFilterAspect {
 
     @AfterReturning(pointcut = "openSession()", returning = "session")
     public void afterOpenSession(Object session) {
+        if(TenantHelper.isIgnore()){
+            return;
+        }
         if (session instanceof Session) {
             Long tenantId = LoginHelper.getTenantId();
             Long dynamic = TenantHelper.getDynamic();

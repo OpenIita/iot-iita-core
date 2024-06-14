@@ -49,6 +49,9 @@ public class TenantListener {
     @PreRemove
     @PrePersist
     public void setTenant(TenantAware entity) {
+        if(TenantHelper.isIgnore()){
+            return;
+        }
         Long tenantId = LoginHelper.getTenantId();
         Long dynamic = TenantHelper.getDynamic();
         if (!Objects.isNull(dynamic)) {
