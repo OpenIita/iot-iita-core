@@ -110,7 +110,7 @@ public class TenantHelper {
      * 获取当前租户id(动态租户优先)
      */
     public static Long getTenantId() {
-        Long tenantId = Long.valueOf(TenantHelper.getDynamic());
+        Long tenantId = TenantHelper.getDynamic();
         if (Objects.isNull(tenantId)) {
             tenantId = LoginHelper.getTenantId();
         }
