@@ -49,7 +49,8 @@ public class TenantFilterAspect {
 
     @AfterReturning(pointcut = "openSession()", returning = "session")
     public void afterOpenSession(Object session) {
-        if(TenantHelper.isIgnore()){
+        // 租户管理需要商业版
+        if(!TenantHelper.isEnable() || TenantHelper.isIgnore()){
             return;
         }
         if (session instanceof Session) {
