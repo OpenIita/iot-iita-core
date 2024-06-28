@@ -41,6 +41,9 @@ public class ThingService<T> {
 
     public static final String TYPE_OTA = "ota";
 
+    public static final String TYPE_CONFIG = "config";
+
+
     private String mid;
 
     private String productKey;
