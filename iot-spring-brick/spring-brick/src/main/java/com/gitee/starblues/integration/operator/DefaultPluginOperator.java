@@ -113,6 +113,7 @@ public class DefaultPluginOperator implements PluginOperator {
             // 开始加载插件
             List<PluginInfo> pluginInfos = pluginManager.loadPlugins();
             if (ObjectUtils.isEmpty(pluginInfos)) {
+                IS_INIT.set(true);
                 return false;
             }
             // 触发插件初始化监听器
