@@ -53,7 +53,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @NoArgsConstructor
-@FilterDef(name = "tenantFilter", parameters = {@ParamDef(name = "tenantId", type = "string")})
+@FilterDef(name = "tenantFilter", parameters = {@ParamDef(name = "tenantId", type = "long")})
 @Filter(name = "tenantFilter", condition = "tenant_id = :tenantId")
 @EntityListeners(TenantListener.class)
 public abstract class BaseTenantEntity implements TenantAware, Serializable {
