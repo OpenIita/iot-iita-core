@@ -30,31 +30,38 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
 import org.graalvm.polyglot.Value;
 
+import java.io.IOException;
+
 /**
  * @author sjg
  */
 @Slf4j
 public class JavaScriptEngine implements IScriptEngine {
+    private ThreadLocal<Context> contextThreadLocal = new ThreadLocal<>();
 
-    private final Context context = Context.newBuilder("js").allowHostAccess(HostAccess.ALL).build();
+    private ThreadLocal<Value> jsScriptThreadLocal = new ThreadLocal<>();
 
-    private Value jsScript;
+    private String scriptContext;
 
     @Override
     public void setScript(String script) {
-        jsScript = context.eval("js", String.format(
-                "new (function () {\n%s; " +
-                        "   this.invoke=function(f,args){" +
-                        "       for(i in args){" +
-                        "           args[i]=JSON.parse(args[i]);" +
-                        "       }" +
-                        "       return JSON.stringify(this[f].apply(this,args));" +
-                        "   }; " +
-                        "})()", script));
+        getContext();
+        scriptContext = script;
+        getJsScript();
+    }
+
+    private Context getContext() {
+        Context context = contextThreadLocal.get();
+        if (context == null) {
+            context = Context.newBuilder("js").allowHostAccess(HostAccess.ALL).build();
+            contextThreadLocal.set(context);
+        }
+        return context;
     }
 
     @Override
     public void putScriptEnv(String key, Object value) {
+        Context context = getContext();
         context.getBindings("js").putMember(key, value);
     }
 
@@ -66,7 +73,9 @@ public class JavaScriptEngine implements IScriptEngine {
 
     @Override
     public <T> T invokeMethod(TypeReference<T> type, String methodName, Object... args) {
+        Value jsScript = getJsScript();
         Value member = jsScript.getMember("invoke");
+
         StringBuilder sbArgs = formatArgs(args);
         //通过调用invoke方法将目标方法返回结果转成json
         Value rst = member.execute(methodName, args);
@@ -80,8 +89,26 @@ public class JavaScriptEngine implements IScriptEngine {
         return JsonUtils.parseObject(json, type);
     }
 
+    private Value getJsScript() {
+        Value jsScript = jsScriptThreadLocal.get();
+        if (jsScript == null) {
+            jsScript = getContext().eval("js", String.format(
+                    "new (function () {\n%s; " +
+                            "   this.invoke=function(f,args){" +
+                            "       for(i in args){" +
+                            "           args[i]=JSON.parse(args[i]);" +
+                            "       }" +
+                            "       return JSON.stringify(this[f].apply(this,args));" +
+                            "   }; " +
+                            "})()", scriptContext));
+            jsScriptThreadLocal.set(jsScript);
+        }
+        return jsScript;
+    }
+
     @Override
     public String invokeMethod(String methodName, String args) {
+        Value jsScript = getJsScript();
         Value member = jsScript.getMember("invoke");
         //通过调用invoke方法将目标方法返回结果转成json
         Value rst = member.execute(methodName, JsonUtils.parseArray(args, Object.class));
