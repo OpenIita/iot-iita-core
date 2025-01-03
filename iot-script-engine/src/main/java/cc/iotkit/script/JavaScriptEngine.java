@@ -28,35 +28,32 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import lombok.extern.slf4j.Slf4j;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.HostAccess;
+import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-
-import java.io.IOException;
 
 /**
  * @author sjg
  */
 @Slf4j
 public class JavaScriptEngine implements IScriptEngine {
-    private ThreadLocal<Context> contextThreadLocal = new ThreadLocal<>();
 
-    private ThreadLocal<Value> jsScriptThreadLocal = new ThreadLocal<>();
+    private final ThreadLocal<Context> contextThreadLocal = new ThreadLocal<>();
 
-    private String scriptContext;
+    /**
+     * 原始脚本内容，仅记录。当前无特殊用途
+     */
+    private String originScript;
+
+    /**
+     * 编译后的源码
+     */
+    private Source compiledScript;
 
     @Override
     public void setScript(String script) {
-        getContext();
-        scriptContext = script;
-        getJsScript();
-    }
-
-    private Context getContext() {
-        Context context = contextThreadLocal.get();
-        if (context == null) {
-            context = Context.newBuilder("js").allowHostAccess(HostAccess.ALL).build();
-            contextThreadLocal.set(context);
-        }
-        return context;
+        initContext();
+        this.originScript = script;
+        this.compiledScript = compileScript(script);
     }
 
     @Override
@@ -89,23 +86,6 @@ public class JavaScriptEngine implements IScriptEngine {
         return JsonUtils.parseObject(json, type);
     }
 
-    private Value getJsScript() {
-        Value jsScript = jsScriptThreadLocal.get();
-        if (jsScript == null) {
-            jsScript = getContext().eval("js", String.format(
-                    "new (function () {\n%s; " +
-                            "   this.invoke=function(f,args){" +
-                            "       for(i in args){" +
-                            "           args[i]=JSON.parse(args[i]);" +
-                            "       }" +
-                            "       return JSON.stringify(this[f].apply(this,args));" +
-                            "   }; " +
-                            "})()", scriptContext));
-            jsScriptThreadLocal.set(jsScript);
-        }
-        return jsScript;
-    }
-
     @Override
     public String invokeMethod(String methodName, String args) {
         Value jsScript = getJsScript();
@@ -119,6 +99,54 @@ public class JavaScriptEngine implements IScriptEngine {
             return null;
         }
         return json;
+    }
+
+    /**
+     * 初始化context
+     */
+    private void initContext() {
+        Context context = contextThreadLocal.get();
+        if (context != null) {
+            // 如果已经存在context,进行关闭。重新创建
+            context.close();
+            contextThreadLocal.remove();
+        }
+        // 初始化 threadLocal中的context
+        getContext();
+    }
+
+    private Context getContext() {
+        Context context = contextThreadLocal.get();
+        if (context == null) {
+            context = Context.newBuilder("js").allowHostAccess(HostAccess.ALL).build();
+            contextThreadLocal.set(context);
+        }
+        return context;
+    }
+
+    private Value getJsScript() {
+        return getContext().eval(compiledScript);
+    }
+
+    /**
+     * 编译脚本，避免每次context.eval时，都进行编译source
+     * 在每次 {@link JavaScriptEngine#setScript(String)}时，进行编译
+     * todo 脚本编写错误抛出异常
+     *
+     * @param script 脚本内容
+     * @return 编译后的source
+     */
+    private static Source compileScript(String script) {
+        String wrapperJsScript = String.format(
+                "new (function () {\n%s; " +
+                        "   this.invoke=function(f,args){" +
+                        "       for(i in args){" +
+                        "           args[i]=JSON.parse(args[i]);" +
+                        "       }" +
+                        "       return JSON.stringify(this[f].apply(this,args));" +
+                        "   }; " +
+                        "})()", script);
+        return Source.create("js", wrapperJsScript);
     }
 
     private static StringBuilder formatArgs(Object[] args) {
